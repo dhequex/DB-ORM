@@ -9,6 +9,8 @@ import errorHandler from "./middleware/errorHandler";
 import AuthManager from "./services/auth/manager";
 import AccountController from "./services/accounts/controller";
 import TransactionController from "./services/transactions/controller";
+require('dotenv').config();
+
 
 interface AppConfig {
   appSecret: string;
