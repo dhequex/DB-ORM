@@ -37,8 +37,14 @@ class UserManager implements IManager {
    * FIXME
    */
   public async getUser(userId: string): Promise<User> {
-    return Promise.resolve(new User());
-  }
+    return this.userRepository.findOne(userId);
+ 
+      // Delegate error handling to Express
+      // with our custom error handler in
+      // `src/middleware/errorHandler.ts`
+    
+    }
+  
 
   /**
    * Create a new user
