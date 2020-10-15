@@ -83,7 +83,7 @@ class UserManager implements IManager {
    * FIXME
    */
   public async removeUser(userId: string): Promise<DeleteResult | void> {
-    return Promise.resolve();
+    return this.userRepository.delete(userId);
   }
 
   /**
