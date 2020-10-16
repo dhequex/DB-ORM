@@ -69,22 +69,11 @@ class UserManager implements IManager {
 
    
   public async updateUser(userId: string, updates: Partial<User>): Promise<User> {
-
-   // const userId = this.userRepository.getId(updates); // userId === 1
-      
+   // Found on   
   let usertoUpdate = await this.userRepository.findOne(userId);
   usertoUpdate.displayName = updates.displayName;
   return this.userRepository.save(usertoUpdate);
   
-  /// Need to update user that has the $$$string userId$$$
- 
-  /// find the user in the table 
- 
-  // if the user exists, update with the update paramaters
-  
-  // return  a promise that contains an updated user
-
-  // otherwise return null
   
 }
     
