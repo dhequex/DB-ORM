@@ -1,6 +1,14 @@
-import { Repository, getRepository, DeleteResult, MoreThanOrEqual, createConnection } from "typeorm";
+import {
+  Repository,
+  getRepository,
+  DeleteResult,
+  MoreThanOrEqual,
+  createConnection
+} from "typeorm";
 import Transaction from "../../entities/TransactionModel";
-import { IManager } from "../common/manager";
+import {
+  IManager
+} from "../common/manager";
 
 interface TransactionWithAccountId extends Transaction {
   accountId: string;
@@ -14,7 +22,7 @@ interface TransactionWithAccountId extends Transaction {
  * refer to UserManager class in `src/service/users/manager.ts`
  */
 class TransactionManager implements IManager {
-  protected transactionRepository: Repository<Transaction>;
+  protected transactionRepository: Repository < Transaction > ;
 
   /**
    * FIXME
@@ -29,7 +37,7 @@ class TransactionManager implements IManager {
    * FIXME
    * Get a transaction from database
    */
-  public async getTransaction(transactionId: string): Promise<Transaction> {
+  public async getTransaction(transactionId: string): Promise < Transaction > {
     return this.transactionRepository.findOne(transactionId);
 
   }
@@ -37,15 +45,17 @@ class TransactionManager implements IManager {
    * FIXME
    * Get a list of transactions with ids from database
    */
-  public async listTransactionsByIds(transactionIds: string[]): Promise<Transaction[]> {
+  public async listTransactionsByIds(transactionIds: string[]): Promise < Transaction[] > {
 
     const transactions = await this.transactionRepository.findByIds(transactionIds);
     return transactions;
   }
 
-  public async listTransactionsInAccount(accountId: string): Promise<Transaction[]> {
+  public async listTransactionsInAccount(accountId: string): Promise < Transaction[] > {
     // get transaction that have foreign key "account ID"
-    const transactions = await this.transactionRepository.find({where:accountId})
+    const transactions = await this.transactionRepository.find({
+      where: {account: accountId}
+    })
     return transactions;
   }
 
@@ -53,7 +63,11 @@ class TransactionManager implements IManager {
    * FIXME
    * Get a list of transactions less than `maximumAmount` in a particular `account`
    */
-  public async filterTransactionsByAmountInAccount(accountId: string, maximumAmount: number): Promise<Transaction[]> {
+  public async filterTransactionsByAmountInAccount(accountId: string, maximumAmount: number): Promise < Transaction[] > {
+    
+   //const lessThan = await this.transactionRepository.find({
+ //     accountId: LessThanOrEqual(maximumAmount)
+ // });
     return Promise.resolve([]);
   }
 
@@ -61,7 +75,7 @@ class TransactionManager implements IManager {
    * FIXME
    * create a new transaction
    */
-  public async createTransaction(details: Partial<TransactionWithAccountId>): Promise<Transaction> {
+  public async createTransaction(details: Partial < TransactionWithAccountId > ): Promise < Transaction > {
     return Promise.resolve(new Transaction());
   }
 
@@ -74,8 +88,8 @@ class TransactionManager implements IManager {
    */
   public async updateTransaction(
     transactionId: string,
-    changes: Partial<TransactionWithAccountId>,
-  ): Promise<Transaction> {
+    changes: Partial < TransactionWithAccountId > ,
+  ): Promise < Transaction > {
     // if ("accountId" in changes) {
     //     changes = {
     //         ...changes,
@@ -91,7 +105,7 @@ class TransactionManager implements IManager {
    * FIXME
    * delete a transaction
    */
-  public async deleteTransaction(transactionId): Promise<DeleteResult | void> {
+  public async deleteTransaction(transactionId): Promise < DeleteResult | void > {
     return Promise.resolve();
   }
 }

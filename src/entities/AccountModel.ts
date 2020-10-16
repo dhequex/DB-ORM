@@ -16,7 +16,7 @@ class Account {
   @PrimaryGeneratedColumn("uuid")
   public id: string;
 
-  @ManyToOne(() => User, user => user.id, {
+  @ManyToOne(() => User, owner => owner.id, {
     onDelete: 'CASCADE'　
   })
   　owner: User;

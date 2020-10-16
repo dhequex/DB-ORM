@@ -15,7 +15,7 @@ class Transaction {
   @PrimaryGeneratedColumn("uuid")
   public id: string;
 
-  @ManyToOne(() => Account, account => account.id, {onDelete:'CASCADE'})
+  @ManyToOne(() => Account, account => account.id, {onDelete:'CASCADE', eager: true})
   account: Account;
   
   @Column({

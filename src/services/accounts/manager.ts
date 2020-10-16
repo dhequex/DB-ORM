@@ -38,20 +38,22 @@ class AccountManager implements IManager {
   public async getAccount(accountId: string): Promise < AccountWithBalance > {
 
     // await this.accountRepository.findOne(accountId);
-  
+
 
     let account = await this.accountRepository.findOne(accountId);
-    
+
     const blankAccount = < AccountWithBalance > new Account();
-  
+
     let accountBalanceDerived = 0.0;
     blankAccount.balance = accountBalanceDerived;
+    blankAccount.id = accountId;
+    blankAccount.name = account.name;
 
-
-    return Promise.resolve(blankAccount);
+    return blankAccount;
   }
 
   public async createAccount(details: Partial < Account > ): Promise < Account > {
+    
     const newAccount = new Account();
     newAccount.name = details.name;
     newAccount.owner = details.owner;
@@ -77,9 +79,9 @@ class AccountManager implements IManager {
    * - Cascade and delete all transactions
    */
   public async deleteAccount(accountId: string): Promise < DeleteResult | void > {
-  return await this.accountRepository.delete({
+    return await this.accountRepository.delete({
       id: accountId
-    }); 
+    });
   }
 }
 
