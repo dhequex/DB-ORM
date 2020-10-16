@@ -190,7 +190,7 @@ describe("expense manager", () => {
     await accountRepo.save(newAccount);
   }
 
-  describe.only("Account service", () => {
+  describe("Account service", () => {
     before(() => {
       accountRepo = getRepository(Account);
       transactionRepo = getRepository(Transaction);
@@ -244,7 +244,7 @@ describe("expense manager", () => {
       expect(account.name).to.equals(name);
     });
 
-    xit("should be able to retrieve an account", async () => {
+    it("should be able to retrieve an account", async () => {
       // Remember we have a beforeEach hook that
       // restore our default test account :)
       const accessToken: string = await signInAndGetToken();
@@ -378,7 +378,7 @@ describe("expense manager", () => {
 
     beforeEach(createNewAccount);
 
-    it.skip("should restrict access by unauthenticated user", async () => {
+    it("should restrict access by unauthenticated user", async () => {
       /**
        * FIXME
        *

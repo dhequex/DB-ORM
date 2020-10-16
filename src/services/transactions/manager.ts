@@ -1,4 +1,4 @@
-import { Repository, getRepository, DeleteResult, MoreThanOrEqual } from "typeorm";
+import { Repository, getRepository, DeleteResult, MoreThanOrEqual, createConnection } from "typeorm";
 import Transaction from "../../entities/TransactionModel";
 import { IManager } from "../common/manager";
 
@@ -22,7 +22,7 @@ class TransactionManager implements IManager {
    * uncomment the lines in the constructor definition
    */
   constructor() {
-    // this.transactionRepository = getRepository(Transaction);
+    this.transactionRepository = getRepository(Transaction);
   }
 
   /**
@@ -30,23 +30,23 @@ class TransactionManager implements IManager {
    * Get a transaction from database
    */
   public async getTransaction(transactionId: string): Promise<Transaction> {
-    return Promise.resolve(new Transaction());
-  }
+    return this.transactionRepository.findOne(transactionId);
 
+  }
   /**
    * FIXME
    * Get a list of transactions with ids from database
    */
   public async listTransactionsByIds(transactionIds: string[]): Promise<Transaction[]> {
-    return Promise.resolve([]);
+
+    const transactions = await this.transactionRepository.findByIds(transactionIds);
+    return transactions;
   }
 
-  /**
-   * FIXME
-   * Get a list of transactions of a particular account
-   */
   public async listTransactionsInAccount(accountId: string): Promise<Transaction[]> {
-    return Promise.resolve([]);
+    // get transaction that have foreign key "account ID"
+    const transactions = await this.transactionRepository.find({where:accountId})
+    return transactions;
   }
 
   /**

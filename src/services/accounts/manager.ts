@@ -1,6 +1,14 @@
-import { Repository, getRepository, DeleteResult, createQueryBuilder, createConnection } from "typeorm";
+import {
+  Repository,
+  getRepository,
+  DeleteResult,
+  createQueryBuilder,
+  createConnection
+} from "typeorm";
 import Account from "../../entities/AccountModel";
-import { IManager } from "../common/manager";
+import {
+  IManager
+} from "../common/manager";
 
 
 interface AccountWithBalance extends Account {
@@ -8,7 +16,7 @@ interface AccountWithBalance extends Account {
 }
 
 class AccountManager implements IManager {
-  protected accountRepository: Repository<Account>;
+  protected accountRepository: Repository < Account > ;
 
   /**
    * FIXME
@@ -27,28 +35,23 @@ class AccountManager implements IManager {
    * - Derive balance (both debit and credit)
    */
 
-  public async getAccount(accountId: string): Promise<AccountWithBalance> {
+  public async getAccount(accountId: string): Promise < AccountWithBalance > {
+
+    // await this.accountRepository.findOne(accountId);
   
-/*
-        // Delegate error handling to Express
-        // with our custom error handler in
-        // `src/middleware/errorHandler.ts`
-      
-    // FIXME Your should derive account balance by aggregating all the transactions
+
+    let account = await this.accountRepository.findOne(accountId);
+    
+    const blankAccount = < AccountWithBalance > new Account();
+  
     let accountBalanceDerived = 0.0;
     blankAccount.balance = accountBalanceDerived;
 
-  return Promise.resolve(blankAccount);*/
 
-const blankAccount = <AccountWithBalance>new Account();
-  let accountBalanceDerived = 0.0;
-    
-  blankAccount.balance = accountBalanceDerived;
-
-  return Promise.resolve(blankAccount);
+    return Promise.resolve(blankAccount);
   }
 
-  public async createAccount(details: Partial<Account>): Promise<Account> {
+  public async createAccount(details: Partial < Account > ): Promise < Account > {
     const newAccount = new Account();
     newAccount.name = details.name;
     newAccount.owner = details.owner;
@@ -60,10 +63,10 @@ const blankAccount = <AccountWithBalance>new Account();
    * FIXME
    * update account details
    */
-  public async updateAccount(accountId: string, changes: Partial<Account>): Promise<Account> {
-   let accountToUpdate = await this.accountRepository.findOne(accountId);
-   accountToUpdate.name = changes.name;
-   return this.accountRepository.save(accountToUpdate);
+  public async updateAccount(accountId: string, changes: Partial < Account > ): Promise < Account > {
+    let accountToUpdate = await this.accountRepository.findOne(accountId);
+    accountToUpdate.name = changes.name;
+    return this.accountRepository.save(accountToUpdate);
   }
 
   /**
@@ -73,8 +76,10 @@ const blankAccount = <AccountWithBalance>new Account();
    * Requirements:
    * - Cascade and delete all transactions
    */
-  public async deleteAccount(accountId: string): Promise<DeleteResult | void> {
-    return this.accountRepository.delete(accountId);
+  public async deleteAccount(accountId: string): Promise < DeleteResult | void > {
+  return await this.accountRepository.delete({
+      id: accountId
+    }); 
   }
 }
 
