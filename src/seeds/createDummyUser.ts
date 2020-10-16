@@ -35,13 +35,11 @@ export default class CreateUsers implements Seeder {
         .insert()
         .into(User)
         .values([
-        { "username": "codechrysalis"},
-        {"displayName": "Code Chrysalis Admin"},
-        {"id": "b12f9390-aeb0-11ea-b3de-0242ac130004"},
-        {"passwordHash": "$2b$10$OaDbdckbS24vzhar1VX5PuT3Cqx24nypbIrdZxI2LzsmIlXahZP52"}
+        {username: 'codechrysalis',      
+        displayName: 'Code Chrysalis Admin',
+        id: 'b12f9390-aeb0-11ea-b3de-0242ac130004',
+        passwordHash: '$2b$10$OaDbdckbS24vzhar1VX5PuT3Cqx24nypbIrdZxI2LzsmIlXahZP52'}
         ])
-        .execute()
-
-        
+        .execute() 
     }
 }
