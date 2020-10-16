@@ -13,6 +13,8 @@ import Account from "./AccountModel";
 /**
  * FIXME
  */
+
+ @Entity
 class Transaction {
   public id: string;
   public amount: number;
