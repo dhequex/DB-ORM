@@ -190,7 +190,7 @@ describe("expense manager", () => {
     await accountRepo.save(newAccount);
   }
 
-  describe("Account service", () => {
+  describe.only("Account service", () => {
     before(() => {
       accountRepo = getRepository(Account);
       transactionRepo = getRepository(Transaction);
@@ -244,7 +244,7 @@ describe("expense manager", () => {
       expect(account.name).to.equals(name);
     });
 
-    it("should be able to retrieve an account", async () => {
+    xit("should be able to retrieve an account", async () => {
       // Remember we have a beforeEach hook that
       // restore our default test account :)
       const accessToken: string = await signInAndGetToken();

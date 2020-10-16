@@ -37,8 +37,11 @@ class UserManager implements IManager {
    * FIXME
    */
   public async getUser(userId: string): Promise<User> {
+
+
     return this.userRepository.findOne(userId);
  
+
       // Delegate error handling to Express
       // with our custom error handler in
       // `src/middleware/errorHandler.ts`
@@ -61,13 +64,6 @@ class UserManager implements IManager {
     return this.userRepository.save(newUser);
   }
 
-  /**
-   * Update user details
-   *
-   * FIXME 
-   */
-
-   
   public async updateUser(userId: string, updates: Partial<User>): Promise<User> {
    // Found on   
   let usertoUpdate = await this.userRepository.findOne(userId);

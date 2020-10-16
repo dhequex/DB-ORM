@@ -10,10 +10,7 @@ import {
 } from "typeorm";
 import Account from "./AccountModel";
 
-/**
- * FIXME
- */
-@Entity({name: "transaction" /* Relation name in database */})
+@Entity({name: "transaction"})
 class Transaction {
   @PrimaryGeneratedColumn("uuid")
   public id: string;
@@ -34,25 +31,6 @@ class Transaction {
   @Column()
   public description: string;
 
-  //@Column({ nullable: false})
-  
-
-
-  
-
-
-
-
-
-
 }
- /* @Entity
-class Transaction {
-  public id: string;
-  public amount: number;
-  public account: Account;
-  public transactionDate: Date;
-  public description: string;
-} */
 
 export default Transaction;
