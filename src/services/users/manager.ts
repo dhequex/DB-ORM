@@ -45,7 +45,6 @@ class UserManager implements IManager {
     
     }
   
-
   /**
    * Create a new user
    */
@@ -65,11 +64,31 @@ class UserManager implements IManager {
   /**
    * Update user details
    *
-   * FIXME
+   * FIXME 
    */
+
+   
   public async updateUser(userId: string, updates: Partial<User>): Promise<User> {
-    return Promise.resolve(new User());
-  }
+
+   // const userId = this.userRepository.getId(updates); // userId === 1
+      
+  let usertoUpdate = await this.userRepository.findOne(userId);
+  usertoUpdate.displayName = updates.displayName;
+  return this.userRepository.save(usertoUpdate);
+  
+  /// Need to update user that has the $$$string userId$$$
+ 
+  /// find the user in the table 
+ 
+  // if the user exists, update with the update paramaters
+  
+  // return  a promise that contains an updated user
+
+  // otherwise return null
+  
+}
+    
+  
 
   /**
    * Delete user
