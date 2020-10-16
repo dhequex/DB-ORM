@@ -21,7 +21,7 @@ import User from "./UserModel";
   public id: string;
 
   @ManyToOne(() => User, user => user.id, {onDelete:'CASCADE'})
-    public user: User;
+   user: User;
 
   @Column({
     length: 100,
@@ -30,8 +30,8 @@ import User from "./UserModel";
   @Column({ nullable: false })
   public name: string;
 
-  @Column({ nullable: false })
-  public owner: User;
+ // @Column({ nullable: false })
+  //public owner: User;
   
   
  // public displayName: string;
