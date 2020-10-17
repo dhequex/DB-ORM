@@ -46,6 +46,12 @@ class TransactionController extends BaseController {
   protected post = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const newTransactionDetails = req.body;
+/*
+        accountId: TEST_ACCOUNT_ID,
+        amount: -2500.0,
+        transactionDate: new Date(),
+        description: "electricity bill",
+   */
       const transaction = await this.manager.createTransaction(newTransactionDetails);
       res.status(201).json(transaction);
     } catch (err) {

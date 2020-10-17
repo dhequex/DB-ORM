@@ -11,7 +11,20 @@ import {
 import Account from "./AccountModel";
 
 @Entity({name: "transaction"})
+
 class Transaction {
+
+  constructor(details: Partial<Transaction>) {
+   /*
+      accountId: TEST_ACCOUNT_ID,
+      account: Account
+      amount: -2500.0,
+      transactionDate: new Date(),
+      description: "electricity bill",
+    */
+    Object.assign(this, details);
+  }
+  
   @PrimaryGeneratedColumn("uuid")
   public id: string;
 

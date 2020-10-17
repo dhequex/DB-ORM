@@ -406,7 +406,7 @@ describe("expense manager", () => {
       const accessToken = await signInAndGetToken();
 
       const createResponse = await chai.request(app).post("/transactions").set("Authorization", accessToken).send({
-        accountId: TEST_ACCOUNT_ID,
+        account: TEST_ACCOUNT_ID,
         amount: -2500.0,
         transactionDate: new Date(),
         description: "electricity bill",
@@ -427,7 +427,7 @@ describe("expense manager", () => {
     it("should be able to update a transaction", async () => {
       const accessToken = await signInAndGetToken();
       const createResponse = await chai.request(app).post("/transactions").set("Authorization", accessToken).send({
-        accountId: TEST_ACCOUNT_ID,
+        account: TEST_ACCOUNT_ID,
         amount: -10230.0,
         transactionDate: new Date(),
         description: "1.2kg of", // Opps, we have a typo
@@ -449,7 +449,7 @@ describe("expense manager", () => {
     it("should be able to delete a transaction", async () => {
       const accessToken = await signInAndGetToken();
       const createResponse = await chai.request(app).post("/transactions").set("Authorization", accessToken).send({
-        accountId: TEST_ACCOUNT_ID,
+        account: TEST_ACCOUNT_ID,
         amount: -390.0,
         transactionDate: new Date(),
         description: "Daruma doll",

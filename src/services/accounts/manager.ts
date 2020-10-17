@@ -24,10 +24,9 @@ class AccountManager implements IManager {
   public async getAccount(accountId: string): Promise < AccountWithBalance > {
 
     let account = await this.accountRepository.findOne(accountId);
-    if (!account) return null;
+    if (!account) return null; // when count does nor
 
     const blankAccount = < AccountWithBalance > new Account();
-
     let accountBalanceDerived = 0.0;
     blankAccount.balance = accountBalanceDerived;
     blankAccount.id = accountId;

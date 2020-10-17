@@ -1,3 +1,4 @@
+import Account from "entities/AccountModel";
 import {
   Repository,
   getRepository,
@@ -6,6 +7,7 @@ import {
   createConnection
 } from "typeorm";
 import Transaction from "../../entities/TransactionModel";
+//import Manager from "src/services/accounts/manager.ts"
 import {
   IManager
 } from "../common/manager";
@@ -23,12 +25,6 @@ interface TransactionWithAccountId extends Transaction {
  */
 class TransactionManager implements IManager {
   protected transactionRepository: Repository < Transaction > ;
-
-  /**
-   * FIXME
-   * After defining the Account entity,
-   * uncomment the lines in the constructor definition
-   */
   constructor() {
     this.transactionRepository = getRepository(Transaction);
   }
@@ -41,15 +37,13 @@ class TransactionManager implements IManager {
     return this.transactionRepository.findOne(transactionId);
 
   }
-  /**
-   * FIXME
-   * Get a list of transactions with ids from database
-   */
+  
+  
   public async listTransactionsByIds(transactionIds: string[]): Promise < Transaction[] > {
-
     const transactions = await this.transactionRepository.findByIds(transactionIds);
     return transactions;
   }
+
 
   public async listTransactionsInAccount(accountId: string): Promise < Transaction[] > {
     // get transaction that have foreign key "account ID"
@@ -76,29 +70,25 @@ class TransactionManager implements IManager {
    * create a new transaction
    */
   public async createTransaction(details: Partial < TransactionWithAccountId > ): Promise < Transaction > {
-    return Promise.resolve(new Transaction());
-  }
+     let newTransaction = new Transaction(details);
+     
+     return this.transactionRepository.save(newTransaction);
+  } 
 
-  /**
-   * update a transaction
-   *
-   * FIXME
-   * 1. Remove the return statement
-   * 2. Uncomment the remaining lines
-   */
+
   public async updateTransaction(
     transactionId: string,
-    changes: Partial < TransactionWithAccountId > ,
-  ): Promise < Transaction > {
-    // if ("accountId" in changes) {
-    //     changes = {
-    //         ...changes,
-    //         account: <any>{ id: changes.accountId }
-    //     };
-    // }
-    // await this.transactionRepository.update(transactionId, changes);
-    // return this.transactionRepository.findOne(transactionId);
-    return Promise.resolve(new Transaction());
+    changes: Partial<TransactionWithAccountId>,
+  ): Promise<Transaction> {
+    if ("accountId" in changes) {
+        changes = {
+            ...changes,
+            account: <any>{ id: changes.accountId }
+        };
+    }
+    await this.transactionRepository.update(transactionId, changes);
+    return this.transactionRepository.findOne(transactionId);
+  
   }
 
   /**
