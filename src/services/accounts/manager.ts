@@ -21,19 +21,21 @@ class AccountManager implements IManager {
     this.accountRepository = getRepository(Account);
   }
 
-  public async getAccount(accountId: string): Promise < AccountWithBalance > {
 
+  public async getAccount(accountId: string): Promise < AccountWithBalance > {
     let account = await this.accountRepository.findOne(accountId);
     if (!account) return null; // when count does nor
 
     const blankAccount = < AccountWithBalance > new Account();
     let accountBalanceDerived = 0.0;
+
     blankAccount.balance = accountBalanceDerived;
     blankAccount.id = accountId;
     blankAccount.name = account.name;
 
     return blankAccount;
   }
+
 
   public async createAccount(details: Partial < Account > ): Promise < Account > {
     const newAccount = new Account();

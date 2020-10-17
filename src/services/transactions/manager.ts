@@ -4,6 +4,7 @@ import {
   getRepository,
   DeleteResult,
   MoreThanOrEqual,
+  LessThanOrEqual,
   createConnection
 } from "typeorm";
 import Transaction from "../../entities/TransactionModel";
@@ -29,16 +30,12 @@ class TransactionManager implements IManager {
     this.transactionRepository = getRepository(Transaction);
   }
 
-  /**
-   * FIXME
-   * Get a transaction from database
-   */
+
   public async getTransaction(transactionId: string): Promise < Transaction > {
     return this.transactionRepository.findOne(transactionId);
-
   }
-  
-  
+
+
   public async listTransactionsByIds(transactionIds: string[]): Promise < Transaction[] > {
     const transactions = await this.transactionRepository.findByIds(transactionIds);
     return transactions;
@@ -48,55 +45,52 @@ class TransactionManager implements IManager {
   public async listTransactionsInAccount(accountId: string): Promise < Transaction[] > {
     // get transaction that have foreign key "account ID"
     const transactions = await this.transactionRepository.find({
-      where: {account: accountId}
+      where: {
+        account: accountId
+      }
     })
     return transactions;
   }
 
-  /**
-   * FIXME
-   * Get a list of transactions less than `maximumAmount` in a particular `account`
-   */
+
   public async filterTransactionsByAmountInAccount(accountId: string, maximumAmount: number): Promise < Transaction[] > {
-    
-   //const lessThan = await this.transactionRepository.find({
- //     accountId: LessThanOrEqual(maximumAmount)
- // });
-    return Promise.resolve([]);
+    const lessThan = await this.transactionRepository.find({
+      where: {
+        account: accountId,
+        amount: LessThanOrEqual(maximumAmount)
+      },
+    });
+    return lessThan;
   }
 
-  /**
-   * FIXME
-   * create a new transaction
-   */
+
   public async createTransaction(details: Partial < TransactionWithAccountId > ): Promise < Transaction > {
-     let newTransaction = new Transaction(details);
-     
-     return this.transactionRepository.save(newTransaction);
-  } 
+    let newTransaction = new Transaction(details);
+    return this.transactionRepository.save(newTransaction);
+  }
 
 
   public async updateTransaction(
     transactionId: string,
-    changes: Partial<TransactionWithAccountId>,
-  ): Promise<Transaction> {
+    changes: Partial < TransactionWithAccountId > ,
+  ): Promise < Transaction > {
     if ("accountId" in changes) {
-        changes = {
-            ...changes,
-            account: <any>{ id: changes.accountId }
-        };
+      changes = {
+        ...changes,
+        account: < any > {
+          id: changes.accountId
+        }
+      };
     }
     await this.transactionRepository.update(transactionId, changes);
     return this.transactionRepository.findOne(transactionId);
-  
   }
 
-  /**
-   * FIXME
-   * delete a transaction
-   */
+
   public async deleteTransaction(transactionId): Promise < DeleteResult | void > {
-    return Promise.resolve();
+    return await this.transactionRepository.delete({
+      id: transactionId
+    });
   }
 }
 

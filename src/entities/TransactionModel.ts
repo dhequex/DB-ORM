@@ -16,8 +16,8 @@ class Transaction {
 
   constructor(details: Partial<Transaction>) {
    /*
-      accountId: TEST_ACCOUNT_ID,
-      account: Account
+      account: TEST_ACCOUNT_ID,
+    
       amount: -2500.0,
       transactionDate: new Date(),
       description: "electricity bill",
